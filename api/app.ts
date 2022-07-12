@@ -7,6 +7,7 @@ import helmet from 'helmet';
 
 import SettingRoutes from './routes/setting';
 import PrintRoutes from './routes/printer';
+import UserRoutes from './routes/user';
 
 const app = express();
 
@@ -60,5 +61,6 @@ app.use((req, res, next) => {
 
 app.use('/api/printer', PrintRoutes);
 app.use('/api/settings', SettingRoutes);
+app.use('/api/user', UserRoutes);
 
 export default app;
