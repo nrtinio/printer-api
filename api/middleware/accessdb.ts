@@ -7,7 +7,7 @@ class AccessDB {
     connection: ADODB.open;
 
     constructor(code: string, connstring: string){
-        ADODB.PATH = './dist/adodb.js'
+        ADODB.PATH = 'adodb.js'
         this.code = code;
         this.connstring = connstring;
     }
