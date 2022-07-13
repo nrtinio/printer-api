@@ -41,7 +41,10 @@ module.exports =  {
       patterns: [
         {
           from: 'node_modules/node-adodb/lib/adodb.js',
-          to: ''
+          to: '',
+          info: {
+            minimized: true
+          }
         }
       ]
     })

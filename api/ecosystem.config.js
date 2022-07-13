@@ -30,9 +30,9 @@ module.exports = {
     env_production: {
       NODE_ENV: 'production',
       MONGO_ATLAS_SCHEME: 'mongodb',
-      MONGO_ATLAS_HOST: '192.168.23.54:27017/opiddb',
-      MONGO_ATLAS_USER: 'opiduser',
-      MONGO_ATLAS_PW: 'OPiduser4286',
+      MONGO_ATLAS_HOST: 'localhost:27017,localhost:27018,localhost:27019',
+      MONGO_ATLAS_USER: '',
+      MONGO_ATLAS_PW: '',
       JWT_KEY: 'secret_this_should_be_longer',
       PORT: '80',
     }

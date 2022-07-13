@@ -11,9 +11,15 @@ import UserRoutes from './routes/user';
 
 const app = express();
 
-const connectionString = process.env.NODE_ENV === 'production' ?
-process.env.MONGO_ATLAS_SCHEME + '://' + process.env.MONGO_ATLAS_USER + ':' + process.env.MONGO_ATLAS_PW + '@' + process.env.MONGO_ATLAS_HOST :
-process.env.MONGO_ATLAS_SCHEME + '://' + process.env.MONGO_ATLAS_HOST + '/opiddb'
+let connectionString = ''
+
+if(process.env.NODE_ENV === 'production' && process.env.MONGO_ATLAS_USER) {
+    connectionString = process.env.MONGO_ATLAS_SCHEME + '://' + process.env.MONGO_ATLAS_USER + ':' + process.env.MONGO_ATLAS_PW + '@' + process.env.MONGO_ATLAS_HOST + '/opiddb';
+} else if(process.env.NODE_ENV === 'production') {
+    connectionString = process.env.MONGO_ATLAS_SCHEME + '://' + process.env.MONGO_ATLAS_HOST + '/opiddb';
+} else {
+    connectionString = process.env.MONGO_ATLAS_SCHEME + '://' + process.env.MONGO_ATLAS_HOST + '/opiddb';
+}
 
 mongoose.connect(connectionString,
     {

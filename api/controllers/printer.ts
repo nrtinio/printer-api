@@ -38,17 +38,17 @@ async function Push(req: Request, res: Response) {
 
         const connection = currentAccessDB.open();
 
-        let updateQuery = "UPDATE tblDelegates SET ";
+        let updateQuery = `UPDATE tblDelegates SET `;
 
         for(let i = 1; i<data.length;i++){
-            updateQuery += `field${i+1}= '${data[i]}'`;
+            updateQuery += `field${i+1}= ${JSON.stringify(data[i])}`;
 
             updateQuery += `, `;
         }
 
         updateQuery += `EntryNotes='Entry updated by ${req.userData.email} via API on ${new Date()}' WHERE field1 = '${data[0]}'`;
 
-        let insertQuery = "INSERT INTO tblDelegates (";
+        let insertQuery = `INSERT INTO tblDelegates (`;
 
         for(let i = 0; i<data.length; i++){
             insertQuery += `field${i+1}`;
@@ -59,14 +59,14 @@ async function Push(req: Request, res: Response) {
         insertQuery += `EntryNotes) VALUES (`;
 
         for(const value of data){
-            insertQuery += `'${value}'`;
+            insertQuery += `${JSON.stringify(value)}`;
 
             insertQuery += `, `
         }
 
-        insertQuery += `'Entry inserted by ${req.userData.email} via API on ${new Date()}')`;
+        insertQuery += `"Entry inserted by ${req.userData.email} via API on ${new Date()}")`;
 
-        const selectQuery = `SELECT COUNT(*) AS cnt FROM tblDelegates WHERE field1 = '${data[0]}'`;
+        const selectQuery = `SELECT COUNT(*) AS cnt FROM tblDelegates WHERE field1 = "${data[0]}"`;
 
         const selectResult:[{cnt: string}] = await connection.query(selectQuery);
 
@@ -87,6 +87,8 @@ async function Push(req: Request, res: Response) {
             });
         }
     } catch (err) {
+        console.log(err)
+
         console.log('Error in pushing to printer: ' + JSON.stringify(err))
 
         res.status(500).json({
